@@ -6,6 +6,7 @@ const handleCreateBooks = (request, h) => {
   let response;
   const { name, pageCount, readPage } = request.payload
 
+  // page count validation
   if (readPage > pageCount) {
     response = h.response({
       status: 'fail',
@@ -16,6 +17,7 @@ const handleCreateBooks = (request, h) => {
     return response;
   }
 
+  // name validation
   if (name) {
     const id = nanoid(16);
     const finished = pageCount === readPage
@@ -58,13 +60,50 @@ const handleCreateBooks = (request, h) => {
 }
 
 const handleReadBooks = (request, h) => {
+  let response;
+
+  // param id validation
   if (request.params.bookId) {
     const bookId = request.params.bookId;
+    const result = books.filter(book => book.id === bookId)[0];
 
-    return `get book id ${bookId}`
+    if (result !== undefined) {
+      response = h.response({
+        status: 'success',
+        data: {
+          book: result
+        }
+      });
+      response.code(200);
+
+      return response;
+    }
+
+    response = h.response({
+      status: 'fail',
+      message: 'Buku tidak ditemukan'
+    });
+    response.code(404);
+
+    return response;
   }
 
-  return `read all books`;
+  // get all books
+  const resultAllBooks = books.map(book => { 
+    const { id, name, publisher } = book;
+
+    return { id, name, publisher }
+  });
+
+  response = h.response({
+    status: 'success',
+    data: {
+      books: resultAllBooks
+    }
+  });
+  response.code(200);
+
+  return response;
 }
 
 const handleUpdateBooks = (request, h) => {
