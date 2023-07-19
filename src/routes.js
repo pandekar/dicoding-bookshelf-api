@@ -1,31 +1,31 @@
-const { 
+const {
   handleCreateBooks,
   handleReadBooks,
   handleUpdateBooks,
-  handleDeleteBooks
+  handleDeleteBooks,
 } = require('./handler');
 
 const routes = [
   {
     method: 'POST',
     path: '/books',
-    handler: handleCreateBooks
+    handler: handleCreateBooks,
   },
   {
     method: 'GET',
     path: '/books/{bookId?}',
-    handler: handleReadBooks
+    handler: handleReadBooks,
   },
   {
     method: 'PUT',
     path: '/books/{bookId}',
-    handler: handleUpdateBooks
+    handler: handleUpdateBooks,
   },
   {
     method: 'DELETE',
     path: '/books/{bookId}',
-    handler: handleDeleteBooks
-  }
+    handler: handleDeleteBooks,
+  },
 ];
 
 module.exports = routes;

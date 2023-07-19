@@ -5,13 +5,14 @@ const routes = require('./routes');
 const init = async () => {
   const server = Hapi.server({
     port: 9000,
-    host: 'localhost'
+    host: 'localhost',
   });
 
   server.route(routes);
 
   await server.start();
+  /* eslint-disable no-console */
   console.log(`Server running on ${server.info.uri}`);
-}
+};
 
 init();
