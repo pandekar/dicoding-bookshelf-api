@@ -165,8 +165,30 @@ const handleUpdateBooks = (request, h) => {
 }
 
 const handleDeleteBooks = (request, h) => {
+  let response;
+  const { bookId } = request.params;
 
-  return `handleDeleteBooks`;
+  const index = books.findIndex(book => book.id === bookId);
+
+  // find index with id validation
+  if (index !== -1) {
+    books.splice(index, 1);
+    response = h.response({
+      status: 'success',
+      message: 'Buku berhasil dihapus'
+    });
+    response.code(200);
+
+    return response;
+  }
+
+  response = h.response({
+    status: 'fail',
+    message: 'Buku gagal dihapus. Id tidak ditemukan'
+  });
+  response.code(404);
+
+  return response;
 }
 
 module.exports = {
