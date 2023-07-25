@@ -62,6 +62,87 @@ const handleCreateBooks = (request, h) => {
 const handleReadBooks = (request, h) => {
   let response;
 
+  // query parameters validation
+  if (request.query) {
+    if (request.query.reading) {
+      const { reading } = request.query;
+      if (reading === '1') {
+        const filteredBooks = books.filter((book) => book.reading === true);
+
+        response = h.response({
+          status: 'success',
+          data: {
+            books: filteredBooks,
+          },
+        });
+        response.code(200);
+
+        return response;
+      }
+
+      if (reading === '0') {
+        const filteredBooks = books.filter((book) => book.reading === false);
+
+        response = h.response({
+          status: 'success',
+          data: {
+            books: filteredBooks,
+          },
+        });
+        response.code(200);
+
+        return response;
+      }
+    }
+
+    if (request.query.finished) {
+      const { finished } = request.query;
+      if (finished === '1') {
+        const filteredBooks = books.filter((book) => book.finished === true);
+
+        response = h.response({
+          status: 'success',
+          data: {
+            books: filteredBooks,
+          },
+        });
+        response.code(200);
+
+        return response;
+      }
+
+      if (finished === '0') {
+        const filteredBooks = books.filter((book) => book.finished === false);
+
+        response = h.response({
+          status: 'success',
+          data: {
+            books: filteredBooks,
+          },
+        });
+        response.code(200);
+
+        return response;
+      }
+    }
+
+    if (request.query.name) {
+      const { name } = request.query;
+      const filteredBooks = books.filter((book) => book
+        .name.toLocaleLowerCase().includes(name.toLocaleLowerCase()));
+
+      response = h.response({
+        status: 'success',
+        data: {
+          books: filteredBooks,
+        },
+      });
+      response.code(200);
+
+      return response;
+    }
+  }
+
   // param id validation
   if (request.params.bookId) {
     const { bookId } = request.params;
