@@ -67,7 +67,12 @@ const handleReadBooks = (request, h) => {
     if (request.query.reading) {
       const { reading } = request.query;
       if (reading === '1') {
-        const filteredBooks = books.filter((book) => book.reading === true);
+        const getBooks = books.filter((book) => book.reading === true);
+        const filteredBooks = getBooks.map((book) => {
+          const { id, name: bookName, publisher } = book;
+
+          return { id, name: bookName, publisher };
+        });
 
         response = h.response({
           status: 'success',
@@ -81,7 +86,12 @@ const handleReadBooks = (request, h) => {
       }
 
       if (reading === '0') {
-        const filteredBooks = books.filter((book) => book.reading === false);
+        const getBooks = books.filter((book) => book.reading === false);
+        const filteredBooks = getBooks.map((book) => {
+          const { id, name: bookName, publisher } = book;
+
+          return { id, name: bookName, publisher };
+        });
 
         response = h.response({
           status: 'success',
@@ -98,7 +108,12 @@ const handleReadBooks = (request, h) => {
     if (request.query.finished) {
       const { finished } = request.query;
       if (finished === '1') {
-        const filteredBooks = books.filter((book) => book.finished === true);
+        const getBooks = books.filter((book) => book.finished === true);
+        const filteredBooks = getBooks.map((book) => {
+          const { id, name: bookName, publisher } = book;
+
+          return { id, name: bookName, publisher };
+        });
 
         response = h.response({
           status: 'success',
@@ -112,7 +127,12 @@ const handleReadBooks = (request, h) => {
       }
 
       if (finished === '0') {
-        const filteredBooks = books.filter((book) => book.finished === false);
+        const getBooks = books.filter((book) => book.finished === false);
+        const filteredBooks = getBooks.map((book) => {
+          const { id, name: bookName, publisher } = book;
+
+          return { id, name: bookName, publisher };
+        });
 
         response = h.response({
           status: 'success',
@@ -128,8 +148,13 @@ const handleReadBooks = (request, h) => {
 
     if (request.query.name) {
       const { name } = request.query;
-      const filteredBooks = books.filter((book) => book
+      const getBooks = books.filter((book) => book
         .name.toLocaleLowerCase().includes(name.toLocaleLowerCase()));
+      const filteredBooks = getBooks.map((book) => {
+        const { id, name: bookName, publisher } = book;
+
+        return { id, name: bookName, publisher };
+      });
 
       response = h.response({
         status: 'success',
@@ -228,7 +253,7 @@ const handleUpdateBooks = (request, h) => {
 
     response = h.response({
       status: 'success',
-      message: 'Buku berhasil diperbaharui',
+      message: 'Buku berhasil diperbarui',
     });
     response.code(200);
 
@@ -237,7 +262,7 @@ const handleUpdateBooks = (request, h) => {
 
   response = h.response({
     status: 'fail',
-    message: 'Gagal memperbaharui buku. Id tidak ditemukan',
+    message: 'Gagal memperbarui buku. Id tidak ditemukan',
   });
   response.code(404);
 
